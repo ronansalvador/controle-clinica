@@ -1,0 +1,35 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  margin: auto;
+  padding: 20px;
+  width: 90%;
+}
+
+.data-sessao {
+  /* align-items: center; */
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 50%;
+}
+
+.data-sessao label {
+  margin-right: 20px;
+  padding: 10px 0;
+}
+
+.data-sessao input {
+  margin: 0;
+}
+
+.sessao-select {
+  width: 50%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
