@@ -7,6 +7,7 @@ import './Sessions.css';
 import RenderSessions from '../components/RenderSessions';
 import Select from 'react-select';
 import { set } from 'mongoose';
+import Input from '../components/Input';
 
 function Sessions() {
   const { sessions, customers } = useContext(Context);
@@ -14,22 +15,11 @@ function Sessions() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
-  // console.log('sessao', sessions);
-
-  // console.log(sessions);
-
-  // useEffect(() => {
-  //   getSessions().then(() => {
-  //     setFilteredSessions(sessions);
-  //   });
-  // }, []);
   const [filteredSessions, setFilteredSessions] = useState(sessions);
 
   useEffect(() => {
     setFilteredSessions(sessions);
   }, [sessions]);
-
-  // console.log(filteredSessions);
 
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
@@ -39,10 +29,9 @@ function Sessions() {
     setEndDate(e.target.value);
   };
 
-  const filterData = (teste) => {
-    console.log('teste', teste);
-    if (teste) {
-      const filtered = teste.filter((item) => {
+  const filterData = (customerFirst) => {
+    if (customerFirst) {
+      const filtered = customerFirst.filter((item) => {
         const itemDate = new Date(item.data);
         const start = startDate ? new Date(startDate) : null;
         const end = endDate ? new Date(endDate) : null;
@@ -57,9 +46,8 @@ function Sessions() {
           return true;
         }
       });
-      console.log(filtered);
       setFilteredSessions(filtered);
-    } else if (!teste) {
+    } else if (!customerFirst) {
       const filtered = sessions.filter((item) => {
         const itemDate = new Date(item.data);
         const start = startDate ? new Date(startDate) : null;
@@ -75,12 +63,8 @@ function Sessions() {
           return true;
         }
       });
-      console.log(filtered);
       filtrarPorCliente(filtered);
     }
-
-    // if (filteredSessions.length > 0) teste = filteredSessions;
-    // if (filteredSessions.length === 0) teste = sessions;
   };
 
   const optionsCustomers = customers.map((customer) => ({
@@ -90,59 +74,26 @@ function Sessions() {
 
   const filtrarPorCliente = async (dataFirst) => {
     await setFilteredSessions(sessions);
-    // console.log(filteredSessions);
-    console.log('select option', selectedOption);
 
     if (dataFirst && !selectedOption) {
-      console.log('dataFirst', dataFirst);
       setFilteredSessions(dataFirst);
     }
 
     if (dataFirst && selectedOption) {
-      console.log('dataFirst e Selected option');
       const newFilter = dataFirst.filter(
         (session) => session.cliente.nome === selectedOption?.value,
       );
       setFilteredSessions(newFilter);
     }
-
-    // if (!dataFirst && selectedOption === null) {
-    //   console.log('select null', filteredSessions);
-    // } else {
-    //   const newFilter = sessions.filter(
-    //     (session) => session.cliente.nome === selectedOption.value,
-    //   );
-    //   await filterData(newFilter);
-    // }
-
     if (!dataFirst) {
-      console.log('não data first');
       const newFilter = sessions.filter(
         (session) => session.cliente.nome === selectedOption.value,
       );
       await filterData(newFilter);
     }
-    // console.log(filteredSessions);
-    // if (selectedOption !== null && filteredSessions.length > 0) {
-    //   const newFilter = filteredSessions.filter(
-    //     (session) => session.cliente.nome === selectedOption.value,
-    //   );
-    //   console.log(newFilter);
-    //   setFilteredSessions(newFilter);
-    // } else if (selectedOption !== null && filteredSessions.length === 0) {
-    //   const newFilter = filteredSessions.filter(
-    //     (session) => session.cliente.nome === selectedOption.value,
-    //   );
-    //   console.log(newFilter);
-    //   setFilteredSessions(newFilter);
-    // } else if (selectedOption === null) {
-    //   setFilteredSessions(sessions);
-    // }
   };
 
   useEffect(() => {
-    // console.log('filteredSessions', filteredSessions);
-    // console.log('selectedOption', selectedOption);
     filtrarPorCliente();
   }, [selectedOption]);
 
@@ -162,30 +113,33 @@ function Sessions() {
       <Header />
       <div className='wrapper'>
         <h1>Consultas</h1>
-        <div>
-          <label htmlFor='start-date'>Start Date:</label>
-          <input
+        <div className='filter-sessions'>
+          <label htmlFor='start-date'>Data Inicial:</label>
+          <Input
             type='date'
             id='start-date'
             value={startDate}
             onChange={handleStartDateChange}
           />
-          <label htmlFor='end-date'>End Date:</label>
-          <input
+          <label htmlFor='end-date'>Data Final:</label>
+          <Input
             type='date'
             id='end-date'
             value={endDate}
             onChange={handleEndDateChange}
           />
+          <label htmlFor='select-customer'>Cliente:</label>
+          <div className='session-select'>
+            <Select
+              options={optionsCustomers}
+              id='select-customer'
+              value={selectedOption}
+              onChange={setSelectedOption}
+              isClearable={true}
+              placeholder='Cliente'
+            />
+          </div>
           <button onClick={() => clearFilter()}>Limpar Filtros</button>
-          <Select
-            options={optionsCustomers}
-            value={selectedOption}
-            onChange={setSelectedOption}
-            // className='teste-select'
-            isClearable={true}
-            placeholder='Cliente'
-          />
         </div>
         <div className='table-container'>
           <table className='tabela'>

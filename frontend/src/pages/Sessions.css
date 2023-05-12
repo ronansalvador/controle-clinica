@@ -29,3 +29,21 @@
   padding-top: 12px;
   text-align: center;
 }
+
+.filter-sessions {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+  /* flex-direction: column; */
+  margin: auto;
+}
+
+.filter-sessions input {
+  width: 20%;
+}
+
+.session-select {
+  width: 25%;
+}
