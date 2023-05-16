@@ -1,6 +1,7 @@
 // arquivo clientesController.js
 
 const { Cliente } = require('../database/models');
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
 // Create - Cria um novo cliente
 const create = async ({ nome, cpf, telefone, endereco }) => {
@@ -32,6 +33,41 @@ const findAll = async () => {
     // res.status(500).json({ message: 'Erro ao buscar clientes.' });
     return { type: 500, message: 'Erro ao criar cliente.' };
   }
+};
+
+const gerarArquivo = async () => {
+  console.log('service');
+  const clientes = await Cliente.findAll();
+  const csvWriter = createCsvWriter({
+    path: '../arquivo.csv',
+    header: [
+      // Defina os nomes das colunas do CSV com base nas colunas da tabela do banco de dados
+      { id: 'id', title: 'ID' },
+      { id: 'nome', title: 'Nome' },
+      { id: 'cpf', title: 'CPF' },
+      // Adicione mais colunas conforme necessário
+    ],
+  });
+
+  // Converte os resultados em um formato adequado para o CSV
+  const csvData = clientes.map((row) => ({
+    id: row.id,
+    nome: row.nome,
+    cpf: row.cpf,
+    // Mapeie mais colunas conforme necessário
+  }));
+
+  csvWriter
+    .writeRecords(csvData)
+    .then(() => ({ type: 200, message: 'arquivo gerado com sucesso' }))
+    .catch((error) => ({ type: 404, message: 'erro ao gerar arquivo' }))
+    .finally(() => {
+      // Encerre a conexão com o banco de dados após gerar o arquivo CSV
+      // connection.end();
+      return { type: 200, message: 'Ronan' };
+    });
+
+  return { type: 200, message: 'Ronan' };
 };
 
 // Read - Busca um cliente por ID
@@ -99,4 +135,5 @@ module.exports = {
   findById,
   update,
   remove,
+  gerarArquivo,
 };

@@ -39,9 +39,19 @@ const update = async (req, res) => {
   return res.status(type).json(message);
 };
 
+const gerarArquivo = async (req, res) => {
+  console.log('controller');
+  const { type, message } = await customerService.gerarArquivo();
+
+  console.log('type controller', type);
+
+  return res.status(type).json(message);
+};
+
 module.exports = {
   getAllCustomers,
   createCustomer,
   findById,
   update,
+  gerarArquivo,
 };
