@@ -9,6 +9,7 @@ import Sessions from './pages/Sessions';
 import 'react-toastify/dist/ReactToastify.css';
 import EditCustomer from './pages/EditCustomer';
 import EditSession from './pages/EditSession';
+import Relatorio from './pages/Relatorio';
 
 function App() {
   const { user } = useContext(Context);
@@ -38,6 +39,7 @@ function App() {
           <Route path='/sessions' element={<Sessions />} />
           <Route path='/customer/:id' element={<EditCustomer />} />
           <Route path='/sessions/:id' element={<EditSession />} />
+          <Route path='relatorios' element={<Relatorio />} />
         </>
       )}
     </Routes>

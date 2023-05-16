@@ -19,7 +19,7 @@ function Header() {
           <Link to='/addsession'>Adicionar Sessão</Link>
         </li>
         <li>
-          <Link to='/addsession'>Relatórios</Link>
+          <Link to='/relatorios'>Relatórios</Link>
         </li>
         <li>
           <Link to='/sessions'>Consultas</Link>
