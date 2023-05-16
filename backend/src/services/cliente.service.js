@@ -39,7 +39,7 @@ const gerarArquivo = async () => {
   console.log('service');
   const clientes = await Cliente.findAll();
   const csvWriter = createCsvWriter({
-    path: '../arquivo.csv',
+    path: '../frontend/public/arquivo.csv',
     header: [
       // Defina os nomes das colunas do CSV com base nas colunas da tabela do banco de dados
       { id: 'id', title: 'ID' },
