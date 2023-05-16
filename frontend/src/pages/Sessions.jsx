@@ -10,7 +10,7 @@ import { set } from 'mongoose';
 import Input from '../components/Input';
 
 function Sessions() {
-  const { sessions, customers } = useContext(Context);
+  const { sessions, customers, getSessions } = useContext(Context);
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -94,6 +94,10 @@ function Sessions() {
   };
 
   useEffect(() => {
+    getSessions();
+  }, []);
+
+  useEffect(() => {
     filtrarPorCliente();
   }, [selectedOption]);
 
@@ -111,8 +115,8 @@ function Sessions() {
   return (
     <>
       <Header />
-      <div className='wrapper'>
-        <h1>Consultas</h1>
+      <div className='session-page'>
+        <h2>Filtrar</h2>
         <div className='filter-sessions'>
           <label htmlFor='start-date'>Data Inicial:</label>
           <Input
@@ -143,7 +147,7 @@ function Sessions() {
         </div>
         <div className='table-container'>
           <table className='tabela'>
-            <caption>Consultas</caption>
+            {/* <caption>Consultas</caption> */}
             <thead>
               <tr>
                 <th>Data</th>

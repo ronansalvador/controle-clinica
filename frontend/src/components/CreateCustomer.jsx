@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Button from './Button';
 import Input from './Input';
 import axios from 'axios';
 // import Context from '../context/Context';
 import { ToastContainer, toast } from 'react-toastify';
 import './CreateCustomer.css';
+import Context from '../context/Context';
 
 function CreateCustomer() {
+  const { user } = useContext(Context);
   const [name, setName] = useState('');
   const [cpf, setCpf] = useState('');
   const [phone, setPhone] = useState('');
@@ -40,8 +42,13 @@ function CreateCustomer() {
 
   const createClient = async () => {
     const data = { nome: name, cpf, telefone: phone, endereco: address };
+    const headers = { headers: { authorization: user.token } };
     try {
-      const response = await axios.post('http://localhost:3001/customer', data);
+      const response = await axios.post(
+        'http://localhost:3001/customer',
+        data,
+        headers,
+      );
 
       if (response.data) {
         showToastSuccess('Cliente inserido com sucesso!');
