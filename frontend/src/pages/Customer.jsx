@@ -19,23 +19,12 @@ function Customer() {
   const editCustomer = () => {
     setCreate(false);
     setEdit(true);
-    // window.location.reload();
     getCustomers();
   };
   return (
     <>
       <Header />
       <div className={styles.container}>
-        {/* <button
-          className={styles.button}
-          type='button'
-          onClick={createCustomer}
-        >
-          Adicionar usuario
-        </button>
-        <button className={styles.button} type='button' onClick={editCustomer}>
-          Editar
-        </button> */}
         <Button onClick={editCustomer} type={`button`}>
           {`Editar`}
         </Button>
