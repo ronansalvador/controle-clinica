@@ -8,5 +8,6 @@ sessionRoute.get('/', sessionController.getAllSession);
 sessionRoute.get('/:id', sessionController.findById);
 sessionRoute.post('/', sessionController.createSession);
 sessionRoute.put('/:id', sessionController.updateSession);
+sessionRoute.get('/byuser/:id', sessionController.findByUser);
 
 module.exports = sessionRoute;

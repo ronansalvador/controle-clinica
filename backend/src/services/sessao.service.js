@@ -135,48 +135,26 @@ const updateSession = async ({
   }
 };
 
-// Create
-// const createSessao = async (sessaoData) => {
-//   const sessao = await Sessao.create(sessaoData);
-//   return sessao.toJSON();
-// };
+async function findByUser(userId) {
+  const sessoes = await Sessao.findAll({
+    where: {
+      id_cliente: userId,
+    },
+    include: [
+      'cliente',
+      'tipo_atendimento',
+      'local_atendimento',
+      'forma_pagamento',
+    ],
+  });
 
-// // Read
-// const getSessaoById = async (sessaoId) => {
-//   const sessao = await Sessao.findByPk(sessaoId);
-//   return sessao ? sessao.toJSON() : null;
-// };
-
-// const getAllSessoes = async () => {
-//   const sessoes = await Sessao.findAll();
-//   return sessoes.map(sessao => sessao.toJSON());
-// };
-
-// // Update
-// const updateSessao = async (sessaoId, sessaoData) => {
-//   const sessao = await Sessao.findByPk(sessaoId);
-//   if (!sessao) {
-//     return null;
-//   }
-//   await sessao.update(sessaoData);
-//   return sessao.toJSON();
-// };
-
-// // Delete
-// const deleteSessao = async (sessaoId) => {
-//   const sessao = await Sessao.findByPk(sessaoId);
-//   if (!sessao) {
-//     return null;
-//   }
-//   await sessao.destroy();
-//   return sessao.toJSON();
-// };
+  return { type: 200, message: [...sessoes] };
+}
 
 module.exports = {
   create,
   findAll,
   findById,
   updateSession,
-  // update,
-  // remove
+  findByUser,
 };

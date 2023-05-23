@@ -48,10 +48,16 @@ function CreateSession() {
 
   const getserviceTypelID = async (option) => {
     const value = option.value;
+    console.log('servicetype', value);
 
     const serviceTypeId = serviceType.filter((item) =>
       item.nome.toLowerCase().includes(value.toLowerCase()),
     )[0].id;
+
+    if (serviceTypeId === 3) {
+      // buscar ultima seção do Clientee verirficar o pacote
+      setPacote(10);
+    }
     setTypeService(serviceTypeId);
   };
 
@@ -190,16 +196,19 @@ function CreateSession() {
             isClearable={true}
             placeholder='Tipo de Atendimento'
           />
-          <Input
-            type='number'
-            required='required'
-            placeholder='Pacote'
-            // className='input-phone'
-            // id='input-phone'
-            value={pacote}
-            onChange={({ target }) => setPacote(target.value)}
-            name='data-sessao'
-          />
+          {typeService === 3 && (
+            <Input
+              type='number'
+              required='required'
+              placeholder='Pacote'
+              // className='input-phone'
+              // id='input-phone'
+              value={pacote}
+              onChange={({ target }) => setPacote(target.value)}
+              name='data-sessao'
+            />
+          )}
+
           <Input
             type='number'
             required='required'

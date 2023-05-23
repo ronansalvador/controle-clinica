@@ -78,6 +78,13 @@ const updateSession = async (req, res) => {
   return res.status(type).json(message);
 };
 
+const findByUser = async (req, res) => {
+  const { id } = req.params;
+  const { type, message } = await sessionService.findByUser(id);
+
+  return res.status(type).json(message);
+};
+
 // const createCustomer = async (req, res) => {
 
 //   const {type, message} = await sessionService.create(req.body);
@@ -99,6 +106,7 @@ module.exports = {
   createSession,
   findById,
   updateSession,
+  findByUser,
   // createCustomer,
   // findById
 };

@@ -2,16 +2,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context/Context';
 
 import Header from '../components/Header';
-import { useNavigate } from 'react-router-dom';
 import './Sessions.css';
 import RenderSessions from '../components/RenderSessions';
 import Select from 'react-select';
-import { set } from 'mongoose';
 import Input from '../components/Input';
 
 function Sessions() {
   const { sessions, customers, getSessions } = useContext(Context);
-  const navigate = useNavigate();
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
