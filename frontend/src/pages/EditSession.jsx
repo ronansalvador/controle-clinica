@@ -137,6 +137,11 @@ function EditSession() {
   };
 
   const editSession = async () => {
+    const isPackage = () => {
+      if (pacote === 0) return false;
+      if (Number(pacote) > Number(numberSession)) return true;
+      else return false;
+    };
     const data = {
       data: dateSession,
       id_cliente: customerId || customer,
@@ -147,7 +152,7 @@ function EditSession() {
       id_forma_de_pagamento: paymentType,
       confirmacao_pagamento: paymentMade,
       data_pagamento: paymentDate,
-      pacote_ativo: true,
+      pacote_ativo: isPackage(),
       sessao_pacote: Number(pacote),
     };
     try {

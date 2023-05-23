@@ -18,7 +18,7 @@ function CreateSession() {
     handleLogout,
   } = useContext(Context);
   const [dateSession, setDateSession] = useState('');
-  const [customer, setCustomer] = useState('');
+  const [customer, setCustomer] = useState(null);
   const [typeService, setTypeService] = useState('');
   const [localSession, setLocalSession] = useState('');
   const [paymentDate, setPaymentDate] = useState('');
@@ -27,8 +27,39 @@ function CreateSession() {
   const [paymentMade, setPaymentMade] = useState(false);
   const [pacote, setPacote] = useState('');
   const [numberSession, setNumberSession] = useState('');
+  const [lastSession, setLastSession] = useState('');
+  const [isPack, setIsPack] = useState(false);
 
-  const getCustomerID = async (option) => {
+  const URL_API = 'http://localhost:3001/';
+
+  const getLastSession = async () => {
+    try {
+      const headers = { headers: { authorization: user.token } };
+      const response = await axios.get(
+        `${URL_API}session/lastsession/${customer}`,
+        headers,
+      );
+
+      const last = response.data;
+      console.log('last', last);
+      setLastSession(last);
+      setIsPack(last.pacote_ativo);
+      setPacote(last.sessao_pacote);
+    } catch (error) {
+      const unauthorizedCode = 401;
+      if (error.response.status === unauthorizedCode) return handleLogout();
+    }
+  };
+
+  useEffect(() => {
+    if (customer > 0) {
+      console.log('maior que 0', customer);
+      getLastSession();
+    }
+    console.log(lastSession);
+  }, [customer]);
+
+  const getCustomerID = (option) => {
     const value = option.value;
 
     const customerId = customers.filter((item) =>
@@ -54,9 +85,12 @@ function CreateSession() {
       item.nome.toLowerCase().includes(value.toLowerCase()),
     )[0].id;
 
-    if (serviceTypeId === 3) {
-      // buscar ultima seção do Clientee verirficar o pacote
-      setPacote(10);
+    // if (serviceTypeId === 3) {
+    //   // buscar ultima seção do Clientee verirficar o pacote
+    //   setPacote(10);
+    // }
+    if (serviceTypeId === 1 || serviceTypeId === 2) {
+      setPacote(0);
     }
     setTypeService(serviceTypeId);
   };
@@ -76,6 +110,12 @@ function CreateSession() {
 
     setPaymentMade(!made);
   };
+
+  // const activePackage = () => {
+  //   console.log('lastSession', lastSession);
+  //   const active = lastSession.pacote_ativo;
+  //   console.log(active);
+  // };
 
   useEffect(() => {
     getCustomers();
@@ -114,6 +154,11 @@ function CreateSession() {
   };
 
   const insertSession = async () => {
+    const isPackage = () => {
+      if (pacote === 0) return false;
+      if (Number(pacote) > Number(numberSession)) return true;
+      else return false;
+    };
     const data = {
       data: dateSession,
       id_cliente: customer,
@@ -124,10 +169,11 @@ function CreateSession() {
       id_forma_de_pagamento: paymentType,
       confirmacao_pagamento: paymentMade,
       data_pagamento: paymentDate,
-      pacote_ativo: true,
+      pacote_ativo: isPackage(),
       sessao_pacote: Number(pacote),
     };
     try {
+      console.log(data);
       const headers = { headers: { authorization: user.token } };
       const response = await axios.post(
         'http://localhost:3001/session',
@@ -188,37 +234,89 @@ function CreateSession() {
             isClearable={true}
             placeholder='Local'
           />
-          <Select
-            options={optionsServicetype}
-            // value={selectedOption}
-            onChange={getserviceTypelID}
-            // className='teste-select'
-            isClearable={true}
-            placeholder='Tipo de Atendimento'
-          />
+
+          {isPack ? (
+            <>
+              <p>Ultima sessão</p>
+              <p>{`sessao ${lastSession.numero_sessao} / ${lastSession.sessao_pacote}`}</p>
+              <Input
+                type='number'
+                required='required'
+                placeholder='Pacote'
+                // className='input-phone'
+                // id='input-phone'
+                value={pacote}
+                onChange={({ target }) => setPacote(target.value)}
+                name='data-sessao'
+              />
+              <Input
+                type='number'
+                required='required'
+                placeholder='Numero da Sessão'
+                // className='input-phone'
+                // id='input-phone'
+                value={numberSession}
+                onChange={({ target }) => setNumberSession(target.value)}
+                name='data-sessao'
+              />
+            </>
+          ) : (
+            <>
+              <Select
+                options={optionsServicetype}
+                // value={selectedOption}
+                onChange={getserviceTypelID}
+                // className='teste-select'
+                isClearable={true}
+                placeholder='Tipo de Atendimento'
+              />
+              {/* <Input
+                type='number'
+                required='required'
+                placeholder='Pacote'
+                // className='input-phone'
+                // id='input-phone'
+                value={pacote}
+                onChange={({ target }) => setPacote(target.value)}
+                name='data-sessao'
+              />
+              <Input
+                type='number'
+                required='required'
+                placeholder='Numero da Sessão'
+                // className='input-phone'
+                // id='input-phone'
+                value={numberSession}
+                onChange={({ target }) => setNumberSession(target.value)}
+                name='data-sessao'
+              /> */}
+            </>
+          )}
           {typeService === 3 && (
-            <Input
-              type='number'
-              required='required'
-              placeholder='Pacote'
-              // className='input-phone'
-              // id='input-phone'
-              value={pacote}
-              onChange={({ target }) => setPacote(target.value)}
-              name='data-sessao'
-            />
+            <>
+              <Input
+                type='number'
+                required='required'
+                placeholder='Pacote'
+                // className='input-phone'
+                // id='input-phone'
+                value={pacote}
+                onChange={({ target }) => setPacote(target.value)}
+                name='data-sessao'
+              />
+              <Input
+                type='number'
+                required='required'
+                placeholder='Numero da Sessão'
+                // className='input-phone'
+                // id='input-phone'
+                value={numberSession}
+                onChange={({ target }) => setNumberSession(target.value)}
+                name='data-sessao'
+              />
+            </>
           )}
 
-          <Input
-            type='number'
-            required='required'
-            placeholder='Numero da Sessão'
-            // className='input-phone'
-            // id='input-phone'
-            value={numberSession}
-            onChange={({ target }) => setNumberSession(target.value)}
-            name='data-sessao'
-          />
           <Input
             type='number'
             required='required'

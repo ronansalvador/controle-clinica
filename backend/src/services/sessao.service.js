@@ -151,10 +151,42 @@ async function findByUser(userId) {
   return { type: 200, message: [...sessoes] };
 }
 
+async function lastSession(userId) {
+  const sessoes = await Sessao.findOne({
+    where: {
+      id_cliente: userId,
+    },
+    order: [['data', 'DESC']],
+    include: [
+      'cliente',
+      'tipo_atendimento',
+      'local_atendimento',
+      'forma_pagamento',
+    ],
+  });
+  // const sessoes = await Sessao.findAll({
+  //   where: {
+  //     id_cliente: userId,
+  //   },
+  //   order: [['data', 'DESC']],
+  //   include: [
+  //     'cliente',
+  //     'tipo_atendimento',
+  //     'local_atendimento',
+  //     'forma_pagamento',
+  //   ],
+  // });
+
+  console.log('teste', sessoes);
+
+  return { type: 200, message: sessoes };
+}
+
 module.exports = {
   create,
   findAll,
   findById,
   updateSession,
   findByUser,
+  lastSession,
 };
