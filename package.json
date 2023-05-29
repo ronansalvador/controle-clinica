@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "install": "./install.sh",
-    "start": "docker-compose up -d && ./start.sh"
+    "compose:up": "cd backend && npm run compose:up",
+    "start": "./start.sh"
   },
   "author": "Ronan Salvador",
   "license": "ISC"
