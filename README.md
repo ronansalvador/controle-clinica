@@ -20,7 +20,7 @@ cd controle-clinica
 npm install
 ```
 
-- Renomeie o arquivo .env.example dentro da pasta backend para .env e altere as informações necessarias:
+- Renomeie o arquivo `.env.example` dentro da pasta backend para `.env` e altere as informações necessarias:
 
 ```bash
 API_PORT= Porta para execução do backend
