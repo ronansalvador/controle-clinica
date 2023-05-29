@@ -20,12 +20,6 @@ cd controle-clinica
 npm install
 ```
 
-- execute o comando abaixo para iniciar um banco de dados mysql com docker:
-
-```bash
-npm run compose:up
-```
-
 - Renomeie o arquivo .env.example dentro da pasta backend para .env e altere as informações necessarias:
 
 ```bash
@@ -35,6 +29,12 @@ MYSQL_PORT= porta para execução do banco de dados
 MYSQL_USER= usuario do banco de dados
 MYSQL_PASSWORD=senha do banco de dados
 MYSQL_DB_NAME=clinica
+```
+
+- execute o comando abaixo para iniciar um banco de dados mysql com docker:
+
+```bash
+npm run compose:up
 ```
 
 
