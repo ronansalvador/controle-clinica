@@ -6,7 +6,6 @@ import validateEmail from '../helpers/validateEmail';
 import saveLocalStorage from '../helpers/saveLocalStorage';
 import eye from '../images/eye.svg';
 import eyeSlash from '../images/eye-slash.svg';
-import './Login.css';
 
 export default function Login() {
   const { setUser } = useContext(Context);
@@ -56,11 +55,12 @@ export default function Login() {
   }, [email, password]);
 
   return (
-    <div className='login-page'>
-      <form className='login-form'>
-        <label htmlFor='login_email'>
+    <div className='flex items-center justify-center h-screen'>
+      <form className='flex flex-col gap-20 h-360 justify-center p-10 w-300'>
+        <label className='flex flex-col' htmlFor='login_email'>
           Login
           <input
+            className='bg-green-200 p-2 rounded'
             type='text'
             data-testid='common_login__input-email'
             id='login_email'
@@ -70,23 +70,26 @@ export default function Login() {
           />
         </label>
 
-        <label htmlFor='login_password' className='login-password-label'>
+        <label className='flex flex-col' htmlFor='login_password'>
           Senha
-          <input
-            type={showPassword ? 'text' : 'password'}
-            data-testid='common_login__input-password'
-            id='login_password'
-            placeholder={showPassword ? 'password' : '********'}
-            value={password}
-            onChange={({ target }) => setPassword(target.value)}
-          />
-          <button
-            className='toggle-password-btn'
-            type='button'
-            onClick={() => setShowPassword((prev) => !prev)}
-          >
-            <img src={showPassword ? eye : eyeSlash} alt='showpassword' />
-          </button>
+          <div className='relative'>
+            <input
+              className='bg-green-200 p-2 rounded'
+              type={showPassword ? 'text' : 'password'}
+              data-testid='common_login__input-password'
+              id='login_password'
+              placeholder={showPassword ? 'password' : '********'}
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+            />
+            <button
+              className='absolute top-3 right-3'
+              type='button'
+              onClick={() => setShowPassword((prev) => !prev)}
+            >
+              <img src={showPassword ? eye : eyeSlash} alt='showpassword' />
+            </button>
+          </div>
         </label>
 
         <div className='login-btn-container'>
@@ -100,7 +103,6 @@ export default function Login() {
           </p>
           <button
             type='button'
-            className='login-btn'
             disabled={!validLogin}
             data-testid='common_login__button-login'
             onClick={handleLogin}
@@ -108,11 +110,7 @@ export default function Login() {
             Login
           </button>
 
-          <button
-            type='button'
-            className='register-btn'
-            data-testid='common_login__button-register'
-          >
+          <button type='button' data-testid='common_login__button-register'>
             <Link to='/register'>Ainda não tenho conta</Link>
           </button>
         </div>
