@@ -2,9 +2,7 @@ import React, { useContext, useState } from 'react';
 import Button from './Button';
 import Input from './Input';
 import axios from 'axios';
-// import Context from '../context/Context';
 import { ToastContainer, toast } from 'react-toastify';
-import './CreateCustomer.css';
 import Context from '../context/Context';
 
 function CreateCustomer() {
@@ -69,8 +67,10 @@ function CreateCustomer() {
   };
 
   return (
-    <>
-      <div className='create-customer'>
+    <div className='flex flex-col items-center justify-around'>
+      {/* <div className='flex flex-col w-5/6 lg:w-1/2 justify-center gap-5 h-max '> */}
+      <div className='w-5/6 mx-auto p-3 flex flex-col justify-center items-center gap-5'>
+        <h1>Inseir dados do cliente</h1>
         <Input
           type='text'
           required='required'
@@ -111,18 +111,17 @@ function CreateCustomer() {
           onChange={({ target }) => setAddress(target.value)}
           name='address'
         />
-        <Button
-          onClick={createClient}
-          className={`create-customer-btn`}
-          type={`button`}
-        >
-          {`Adicionar`}
-        </Button>
+        <div className='flex items-center justify-center'>
+          <Button onClick={createClient} type={`button`}>
+            {`Adicionar`}
+          </Button>
+        </div>
+
         {/* {message ? <p>Cliente inserido com sucesso</p> : ''} */}
         {/* <button onClick={showToastMessage}>Notificar</button> */}
         <ToastContainer />
       </div>
-    </>
+    </div>
   );
 }
 

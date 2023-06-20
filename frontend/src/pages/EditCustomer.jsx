@@ -86,10 +86,10 @@ function EditCustomer() {
   };
 
   return (
-    <>
+    <main className='flex flex-col min-h-screen bg-stone-200 '>
       <Header />
 
-      <div className='create-customer'>
+      <div className='w-5/6 mx-auto p-3 flex flex-col justify-center items-center gap-5'>
         <h1>Editar dados do cliente</h1>
         <Input
           type='text'
@@ -140,7 +140,7 @@ function EditCustomer() {
         </Button>
         <ToastContainer />
       </div>
-    </>
+    </main>
   );
 }
 

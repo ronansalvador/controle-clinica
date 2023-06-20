@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Context from '../context/Context';
-
 import Header from '../components/Header';
-import './Sessions.css';
 import RenderSessions from '../components/RenderSessions';
 import Select from 'react-select';
 import Input from '../components/Input';
@@ -110,11 +108,11 @@ function Sessions() {
   };
 
   return (
-    <>
+    <main className='flex flex-col min-h-screen bg-stone-200 '>
       <Header />
-      <div className='session-page'>
+      <div className='flex flex-col items-center justify-around gap-2 p-10'>
         <h2>Filtrar</h2>
-        <div className='filter-sessions'>
+        <div className='flex flex-col w-5/6 lg:w-1/2 justify-evenly'>
           <label htmlFor='start-date'>Data Inicial:</label>
           <Input
             type='date'
@@ -122,44 +120,70 @@ function Sessions() {
             value={startDate}
             onChange={handleStartDateChange}
           />
-          <label htmlFor='end-date'>Data Final:</label>
+          <label className='mt-5' htmlFor='end-date'>
+            Data Final:
+          </label>
           <Input
             type='date'
             id='end-date'
             value={endDate}
             onChange={handleEndDateChange}
           />
-          <label htmlFor='select-customer'>Cliente:</label>
-          <div className='session-select'>
-            <Select
-              options={optionsCustomers}
-              id='select-customer'
-              value={selectedOption}
-              onChange={setSelectedOption}
-              isClearable={true}
-              placeholder='Cliente'
-            />
-          </div>
-          <button onClick={() => clearFilter()}>Limpar Filtros</button>
+
+          <Select
+            className='mt-5'
+            options={optionsCustomers}
+            id='select-customer'
+            value={selectedOption}
+            onChange={setSelectedOption}
+            isClearable={true}
+            placeholder='Cliente'
+          />
+          <button
+            className='bg-blue-600 p-1 rounded m-5 self-center text-white'
+            onClick={() => clearFilter()}
+          >
+            Limpar Filtros
+          </button>
         </div>
-        <div className='table-container'>
-          <table className='tabela'>
+        <div className='flex justify-center items-center'>
+          <table className='w-4/5 lg:w-5/6 divide-y divide-gray-200 grow'>
             {/* <caption>Consultas</caption> */}
-            <thead>
+            <thead className='bg-gray-50'>
               <tr>
-                <th>Data</th>
-                <th>Paciente</th>
-                <th>Tipo</th>
-                <th>Local</th>
-                <th>Valor</th>
-                <th>Sessão</th>
-                <th>Pagamento</th>
-                <th>Pgto</th>
-                <th>Data pgto</th>
-                <th>Editar</th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                  Data
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                  Paciente
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell lg:table-cell'>
+                  Tipo
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell'>
+                  Local
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell'>
+                  Valor
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell'>
+                  Sessão
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell'>
+                  Pagamento
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell'>
+                  Pgto
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell'>
+                  Data pgto
+                </th>
+                <th className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+                  Editar
+                </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className='bg-white divide-y divide-gray-200'>
               {filteredSessions.length > 0 ? (
                 <RenderSessions sessions={filteredSessions} />
               ) : (
@@ -169,7 +193,7 @@ function Sessions() {
           </table>
         </div>
       </div>
-    </>
+    </main>
   );
 }
 

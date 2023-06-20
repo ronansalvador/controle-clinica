@@ -55,12 +55,12 @@ export default function Login() {
   }, [email, password]);
 
   return (
-    <div className='flex items-center justify-center h-screen'>
-      <form className='flex flex-col gap-20 h-360 justify-center p-10 w-300'>
+    <div className='bg-stone-200 min-h-screen flex items-center justify-center'>
+      <form className='bg-white px-16 py-12 rounded-2xl shadow-lg text-black w-100'>
         <label className='flex flex-col' htmlFor='login_email'>
           Login
           <input
-            className='bg-green-200 p-2 rounded'
+            className='w-full block bg-black rounded p-2 text-white'
             type='text'
             data-testid='common_login__input-email'
             id='login_email'
@@ -74,7 +74,7 @@ export default function Login() {
           Senha
           <div className='relative'>
             <input
-              className='bg-green-200 p-2 rounded'
+              className='w-full block bg-black rounded p-2 text-white'
               type={showPassword ? 'text' : 'password'}
               data-testid='common_login__input-password'
               id='login_password'
@@ -102,6 +102,7 @@ export default function Login() {
             {loginWarning.message}
           </p>
           <button
+            className='bg-blue-400 p-3 w-full mt-4 rounded-lg shadow hover:bg-blue-600 hover:text-white disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-black'
             type='button'
             disabled={!validLogin}
             data-testid='common_login__button-login'

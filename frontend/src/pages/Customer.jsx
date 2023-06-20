@@ -22,9 +22,9 @@ function Customer() {
     getCustomers();
   };
   return (
-    <>
+    <main className='flex flex-col min-h-screen bg-stone-200 '>
       <Header />
-      <div className={styles.container}>
+      <div className='flex h-20 items-center justify-evenly bg-stone-200 '>
         <Button onClick={editCustomer} type={`button`}>
           {`Editar`}
         </Button>
@@ -34,7 +34,7 @@ function Customer() {
       </div>
       {create && <CreateCustomer />}
       {edit && <EditUser />}
-    </>
+    </main>
   );
 }
 

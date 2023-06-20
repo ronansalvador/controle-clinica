@@ -4,7 +4,6 @@ import axios from 'axios';
 import Context from '../context/Context';
 import validateEmail from '../helpers/validateEmail';
 import saveLocalStorage from '../helpers/saveLocalStorage';
-import './Login.css';
 
 export default function Register() {
   const { setUser } = useContext(Context);
@@ -45,12 +44,13 @@ export default function Register() {
   }, [name, email, password]);
 
   return (
-    <div className='login-page'>
+    <div className='bg-stone-200 min-h-screen flex items-center justify-center'>
       {/* <img className="login-page-logo" src={ havingFun } alt="logo" /> */}
-      <form className='login-form'>
-        <label htmlFor='register_name'>
+      <form className='bg-white px-16 py-12 rounded-2xl shadow-lg text-black w-100 flex flex-col'>
+        <label className='flex flex-col' htmlFor='register_name'>
           Nome Completo
           <input
+            className='w-full block bg-black rounded p-2 text-white'
             type='text'
             data-testid='common_register__input-name'
             id='register_name'
@@ -59,10 +59,10 @@ export default function Register() {
             onChange={({ target }) => setName(target.value)}
           />
         </label>
-
-        <label htmlFor='register_email'>
+        <label className='flex flex-col' htmlFor='register_email'>
           E-mail
           <input
+            className='w-full block bg-black rounded p-2 text-white'
             type='text'
             data-testid='common_register__input-email'
             id='register_email'
@@ -72,9 +72,10 @@ export default function Register() {
           />
         </label>
 
-        <label htmlFor='register_password'>
+        <label className='flex flex-col' htmlFor='register_password'>
           Senha
           <input
+            className='w-full block bg-black rounded p-2 text-white'
             type='password'
             data-testid='common_register__input-password'
             id='register_password'
@@ -86,10 +87,9 @@ export default function Register() {
 
         <div className='login-btn-container'>
           <button
+            className='bg-blue-400 p-3 w-full mt-4 rounded-lg shadow hover:bg-blue-600 hover:text-white disabled:cursor-not-allowed disabled:bg-gray-400 disabled:text-black'
             type='button'
             disabled={!validLogin}
-            className='login-btn'
-            data-testid='common_register__button-register'
             onClick={handleRegister}
           >
             CADASTRAR

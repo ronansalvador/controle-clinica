@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "install": "./install.sh",
     "compose:up": "cd backend && npm run compose:up",
+    "compose:down": "cd backend && npm run compose:down",
     "start": "./start.sh"
   },
   "author": "Ronan Salvador",
